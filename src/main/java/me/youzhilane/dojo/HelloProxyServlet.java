@@ -20,8 +20,8 @@ public class HelloProxyServlet extends ProxyServlet {
     @Override
     protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try{
-            HelloResponseWrapper helloResponseWrapper=new HelloResponseWrapper(request,response);
-            super.service(request, helloResponseWrapper);
+            //HelloResponseWrapper helloResponseWrapper=new HelloResponseWrapper(request,response);
+            super.service(request, response);
         }catch (Exception e){
             e.printStackTrace();
         }
@@ -31,7 +31,7 @@ public class HelloProxyServlet extends ProxyServlet {
     protected URI rewriteURI(HttpServletRequest request) {
         URI uri=null;
         try {
-            uri=new URI("http://192.168.0.109:7777");
+            uri=new URI("http://localhost:7777");
         }catch (Exception e){
             e.printStackTrace();
         }
@@ -41,8 +41,15 @@ public class HelloProxyServlet extends ProxyServlet {
     @Override
     protected void onProxyResponseSuccess(HttpServletRequest request,HttpServletResponse response,Response proxyResponse){
         try {
-            if (response instanceof HelloResponseWrapper){
-                ((HelloResponseWrapper) response).writeOutput();
+//            if (response instanceof HelloResponseWrapper){
+//                ((HelloResponseWrapper) response).writeOutput();
+//            }
+            String query=request.getQueryString();
+            System.out.println("**************************");
+            System.out.println(query);
+            System.out.println("**************************");
+            if("1".equals(query)){
+                Thread.sleep(10000);
             }
             super.onProxyResponseSuccess(request,response,proxyResponse);
         }catch (Exception e){
