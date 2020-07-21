@@ -28,14 +28,8 @@ public class HelloProxyServlet extends ProxyServlet {
     }
 
     @Override
-    protected URI rewriteURI(HttpServletRequest request) {
-        URI uri=null;
-        try {
-            uri=new URI("http://localhost:7777");
-        }catch (Exception e){
-            e.printStackTrace();
-        }
-        return uri;
+    protected String rewriteTarget(HttpServletRequest request) {
+        return "http://localhost:7777";
     }
 
     @Override
@@ -49,7 +43,7 @@ public class HelloProxyServlet extends ProxyServlet {
             System.out.println(query);
             System.out.println("**************************");
             if("1".equals(query)){
-                Thread.sleep(10000);
+                Thread.sleep(5000);
             }
             super.onProxyResponseSuccess(request,response,proxyResponse);
         }catch (Exception e){
